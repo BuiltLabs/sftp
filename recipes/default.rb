@@ -8,7 +8,5 @@
 # Source:: https://github.com/OnBeep/cookbook-sftp
 #
 
-
-include_recipe 'chef-solo-search'
 include_recipe 'openssh'
 include_recipe 'sftp::chroot_users'
