@@ -10,4 +10,5 @@
 
 
 default['sftp']['sftp_group_id'] = 2012
-default['sftp']['sftp_dropbox'] = 'upload'
+default['sftp']['sftp_root'] = '/sftp'
+default['sftp']['sftp_directories'] = [ 'upload' ]

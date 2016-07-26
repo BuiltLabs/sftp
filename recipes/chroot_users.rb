@@ -22,19 +22,21 @@ end
 data_bag(:users).each do |user|
   user_item = data_bag_item('users', user)
   if user_item and user_item['groups'] and user_item['groups'].include?('sftp')
-    home = if user_item['home']
-      user_item['home']
-    else
-      File.join('/home', user_item['id'])
-    end
+    home = if user_item['home'] and user_item['home'] != "/dev/null"
+             user_item['home']
+           else
+             File.join(node['sftp']['sftp_root'], user_item['id'])
+           end
 
     directory home do
       owner 'root'
       group 'root'
     end
 
-    directory File.join(home, node['sftp']['sftp_dropbox']) do
-      owner user_item['id']
+    node['sftp']['sftp_directories'].each do |dir|
+      directory File.join(home, dir) do
+        owner user_item['id']
+      end
     end
 
     directory File.join(home, '.ssh') do
